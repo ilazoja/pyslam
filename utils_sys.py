@@ -218,7 +218,7 @@ class Logging(object):
 # from module import name.method  
 # since method is an attribute of name!
 def import_from(module, name, method=None):
-    try:      
+    try:
         imported_module = __import__(module, fromlist=[name])
         imported_name = getattr(imported_module, name)
         if method is None: 
