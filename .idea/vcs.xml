@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/SOSNet" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/d2net" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/disk" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/disk/submodules/torch-dimcheck" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/disk/submodules/torch-localize" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/disk/submodules/unets" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/g2opy" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/hardnet" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/keynet" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/lfnet" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/logpolar" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/pangolin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/r2d2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/rfnet" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/superpoint" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/tensorflow_models" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/thirdparty/tfeat" vcs="Git" />
+  </component>
+</project>
