@@ -20,6 +20,7 @@
 import numpy as np
 import cv2
 import math
+import os
 
 from config import Config
 
@@ -97,10 +98,26 @@ if __name__ == "__main__":
     is_draw_err = True 
     err_plt = Mplot2d(xlabel='img id', ylabel='m',title='error')
 
-    is_draw_matched_points = True 
+    is_draw_matched_points = True
     matched_points_plt = Mplot2d(xlabel='img id', ylabel='# matches',title='# matches')
 
+    is_save_img = False
+
+    output_dir = "output/"
+    if not os.path.exists(output_dir):
+        os.mkdir(output_dir)
+
+    if is_save_img:
+        save_img_dir = output_dir + "img/"
+        if not os.path.exists(save_img_dir):
+            os.mkdir(save_img_dir)
+
+        save_img_dir = save_img_dir + dataset.name + '/'
+        if not os.path.exists(save_img_dir):
+            os.mkdir(save_img_dir)
+
     img_id = 0
+
     while dataset.isOk():
 
         img = dataset.getImage(img_id)
@@ -141,7 +158,7 @@ if __name__ == "__main__":
                     err_plt.draw(errx,'err_x',color='g')
                     err_plt.draw(erry,'err_y',color='b')
                     err_plt.draw(errz,'err_z',color='r')
-                    err_plt.refresh()    
+                    err_plt.refresh()
 
                 if is_draw_matched_points:
                     matched_kps_signal = [img_id, vo.num_matched_kps]
@@ -152,7 +169,10 @@ if __name__ == "__main__":
 
 
             # draw camera image 
-            cv2.imshow('Camera', vo.draw_img)				
+            cv2.imshow('Camera', vo.draw_img)
+
+            if is_save_img:
+                cv2.imwrite(save_img_dir + str(img_id) + '.png', vo.draw_img)
 
         # press 'q' to exit!
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -164,15 +184,35 @@ if __name__ == "__main__":
 
     if is_draw_traj_img:
         print('saving map.png')
-        cv2.imwrite('map.png', traj_img)
+        map_dir = output_dir + "map/"
+        if not os.path.exists(map_dir):
+            os.mkdir(map_dir)
+        cv2.imwrite(map_dir + dataset.name + '.png', traj_img)
     if is_draw_3d:
         if not kUsePangolin:
-            plt3d.quit()
+            print('saving map3D.png')
+            map3D_dir = output_dir + "map3D/"
+            if not os.path.exists(map3D_dir):
+                os.mkdir(map3D_dir)
+            #plt3d.fig.savefig(map3D_dir + dataset.name + '.png')
+            #plt3d.quit()
         else: 
             viewer3D.quit()
     if is_draw_err:
-        err_plt.quit()
+        print('saving err_plt.png')
+        err_dir = output_dir + "err/"
+        if not os.path.exists(err_dir):
+            os.mkdir(err_dir)
+        #err_plt.fig.savefig(err_dir + dataset.name + 'png')
+        #err_plt.quit()
     if is_draw_matched_points is not None:
-        matched_points_plt.quit()
-                
+        print('saving matched_pts.png')
+        matched_pts_dir = output_dir + "matched_pts/"
+        if not os.path.exists(matched_pts_dir):
+            os.mkdir(matched_pts_dir)
+        #matched_points_plt.fig.savefig(matched_pts_dir + dataset.name + '.png')
+        #matched_points_plt.quit()
+
+    #while True:  # for saving the figures
+    #      pass
     cv2.destroyAllWindows()

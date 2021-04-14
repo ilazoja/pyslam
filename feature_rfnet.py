@@ -58,13 +58,13 @@ class RfNetFeature2D:
 
         print(f"{gct()} : to device")
 
-        use_cuda = torch.cuda.is_available() & do_cuda
-        self.device = torch.device('cuda' if use_cuda else 'cpu')
+        self.use_cuda = torch.cuda.is_available() & do_cuda
+        self.device = torch.device('cuda' if self.use_cuda else 'cpu')
         self.model = model.to(self.device)
         resume = config.cfg.root_folder + '/thirdparty/rfnet/runs/10_24_09_25/model/e121_NN_0.480_NNT_0.655_NNDR_0.813_MeanMS_0.649.pth.tar'
         print(f"{gct()} : in {resume}")
 
-        if use_cuda:
+        if self.use_cuda:
             checkpoint = torch.load(resume)
         else:
             checkpoint = torch.load(resume, map_location=torch.device('cpu'))
@@ -77,7 +77,11 @@ class RfNetFeature2D:
             #self.kps, self.des = self.compute_kps_des(frame)
             kps, des, img = self.model.detectAndCompute(frame, self.device, (frame.shape[0], frame.shape[1]))
             self.kps = list(map(self.to_cv2_kp, kps.numpy()))
-            self.des = des.detach().numpy()
+
+            if self.use_cuda:
+                self.des = des.detach().cpu().numpy()
+            else:
+                self.des = des.detach().numpy()
             #self.kps = to_cv2_kp
 
             if kVerbose:
