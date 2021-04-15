@@ -39,7 +39,7 @@ from feature_types import FeatureDetectorTypes, FeatureDescriptorTypes, FeatureI
 from feature_matcher import feature_matcher_factory, FeatureMatcherTypes
 
 from feature_tracker_configs import FeatureTrackerConfigs
-
+import time
 
 
 """
@@ -50,7 +50,7 @@ kUsePangolin = False
 if kUsePangolin:
     from viewer3D import Viewer3D
 
-
+start_time = time.time()
 
 if __name__ == "__main__":
 
@@ -182,6 +182,9 @@ if __name__ == "__main__":
     #print('press a key in order to exit...')
     #cv2.waitKey(0)
 
+    avg_time = (time.time() - start_time) / img_id
+    print("Average processing time per frame (s): " + str(avg_time))
+
     if is_draw_traj_img:
         print('saving map.png')
         map_dir = output_dir + "map/"
@@ -190,7 +193,7 @@ if __name__ == "__main__":
         cv2.imwrite(map_dir + dataset.name + '.png', traj_img)
     if is_draw_3d:
         if not kUsePangolin:
-            print('saving map3D.png')
+            print('save map3D.png')
             map3D_dir = output_dir + "map3D/"
             if not os.path.exists(map3D_dir):
                 os.mkdir(map3D_dir)
@@ -199,14 +202,14 @@ if __name__ == "__main__":
         else: 
             viewer3D.quit()
     if is_draw_err:
-        print('saving err_plt.png')
+        print('save err_plt.png')
         err_dir = output_dir + "err/"
         if not os.path.exists(err_dir):
             os.mkdir(err_dir)
         #err_plt.fig.savefig(err_dir + dataset.name + 'png')
         #err_plt.quit()
     if is_draw_matched_points is not None:
-        print('saving matched_pts.png')
+        print('save matched_pts.png')
         matched_pts_dir = output_dir + "matched_pts/"
         if not os.path.exists(matched_pts_dir):
             os.mkdir(matched_pts_dir)
@@ -215,4 +218,7 @@ if __name__ == "__main__":
 
     #while True:  # for saving the figures
     #      pass
+
+
+
     cv2.destroyAllWindows()
